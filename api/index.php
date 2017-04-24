@@ -83,6 +83,50 @@ $app->get('/airconditioners', function ($request, $response) {
 });
 
 /* *
+ * URL: http://210.211.109.180/drmuller/api/lights
+ * Parameters: none
+ * Request body:
+ * {
+      "IsOn": 1,
+      "Brightness": 50,
+      "Area": "Dining room"
+ * }
+ * Authorization: Session Token to be matched with userId
+ * Method: post
+ * */
+$app->post('/lights', function ($request, $response) {
+    $data = (object) $request->getParsedBody();
+    $informationArray = array(
+        'isOn' => $data->isOn,
+        'brightness' => $data->brightness,
+        'area' => $data->area
+   );
+   
+    $validationRules = new ValidationRules();
+    $verifiedData = $validationRules->verifyRequiredFieldsForCreatingNewLight($data);
+    if (!$verifiedData['isValid']) {
+        return responseBuilder(400, $response, $verifiedData['response']);
+    }
+
+    $db = new DbOperation();
+    $result = array();
+
+    $isLightCreated = $db->createNewLight($data);
+
+    if ($isLightCreated) {
+        $result['status'] = 1;
+       $result['message'] = light_create_success_message;
+       $statusCode = 200;
+    } else {
+       $result['status'] = 0;
+        $result['message'] = light_create_error_message;
+       $statusCode = 501;
+    }
+    
+    return responseBuilder(200, $response, $result);
+});
+
+/* *
  * Type: Helper method
  * Responsibility: Build response with contentType and httpStatusCode
  * */
