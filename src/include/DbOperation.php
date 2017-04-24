@@ -43,6 +43,41 @@ class DbOperation
 
         return $conditioners;
     }
+            
+    public function createNewLight($data) {
+        $this->con->autocommit(false);
+        $isInsertSuccess = $this->insertNewLight($data);
+        
+        if ($isInsertSuccess) {
+            $this->con->commit();
+            $this->con->close();
+        } else {
+            $this->con->rollback();
+            $this->con->autocommit(true);
+        }
+        return $isInsertSuccess;
+    }
+    
+    //Method to insert new light
+    private function insertNewLight($data) {
+        echo "hello1211";
+        $isOn = $data->isOn;
+        $brightness = $data->brightness;
+        $area = $data->area;
+        
+        $sql = query_Insert_NewLight;
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param('sss', $isOn, $brightness, $area);
+        $result = $stmt->execute();
+        $stmt->close();
+            
+        if ($result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     static function
     Prettify($msg) {
