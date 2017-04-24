@@ -87,9 +87,9 @@ $app->get('/airconditioners', function ($request, $response) {
  * Parameters: none
  * Request body:
  * {
-      "IsOn": 1,
-      "Brightness": 50,
-      "Area": "Dining room"
+      "isOn": 1,
+      "brightness": 50,
+      "area": "Dining room"
  * }
  * Authorization: Session Token to be matched with userId
  * Method: post
