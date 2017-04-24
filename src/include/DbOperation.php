@@ -43,24 +43,9 @@ class DbOperation
 
         return $conditioners;
     }
-            
-    public function createNewLight($data) {
-        $this->con->autocommit(false);
-        $isInsertSuccess = $this->insertNewLight($data);
-        
-        if ($isInsertSuccess) {
-            $this->con->commit();
-            $this->con->close();
-        } else {
-            $this->con->rollback();
-            $this->con->autocommit(true);
-        }
-        return $isInsertSuccess;
-    }
-    
+             
     //Method to insert new light
     private function insertNewLight($data) {
-        echo "hello1211";
         $isOn = $data->isOn;
         $brightness = $data->brightness;
         $area = $data->area;

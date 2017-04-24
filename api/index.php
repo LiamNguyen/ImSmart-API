@@ -103,7 +103,7 @@ $app->post('/lights', function ($request, $response) {
    );
    
     $validationRules = new ValidationRules();
-    $verifiedData = $validationRules->verifyRequiredFieldsForCreatingNewLight($informationArray);
+    $verifiedData = $validationRules->verifyRequiredFieldsForCreatingNewLight($data);
     if (!$verifiedData['isValid']) {
         return responseBuilder(400, $response, $verifiedData['response']);
     }
@@ -111,7 +111,7 @@ $app->post('/lights', function ($request, $response) {
     $db = new DbOperation();
     $result = array();
 
-    $isLightCreated = $db->createNewLight($informationArray);
+    $isLightCreated = $db->createNewLight($data);
 
     if ($isLightCreated) {
         $result['status'] = 1;
