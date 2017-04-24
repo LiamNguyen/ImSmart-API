@@ -7,8 +7,7 @@ class ValidationRules {
 * */
     function verifyRequiredFieldsForCreatingNewLight($data) {
         $result = array();
-        $isValid = false;
-        echo "hello". $data->isOn . $data->brightness . $data->area;
+        
         if (empty($data->isOn) || empty($data->brightness) || empty($data->area)) {
             $result['status'] = '0';
             $result['message'] = required_fields_missing_message;

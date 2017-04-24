@@ -111,7 +111,7 @@ $app->post('/lights', function ($request, $response) {
     $db = new DbOperation();
     $result = array();
 
-    $isLightCreated = $db->createNewLight($data);
+    $isLightCreated = $db->insertNewLight($data);
 
     if ($isLightCreated) {
         $result['status'] = 1;

@@ -45,7 +45,7 @@ class DbOperation
     }
              
     //Method to insert new light
-    private function insertNewLight($data) {
+    public function insertNewLight($data) {
         $isOn = $data->isOn;
         $brightness = $data->brightness;
         $area = $data->area;
