@@ -48,7 +48,7 @@ $app->get('/test/running', function () {
  * Authorization: none
  * Method: GET
  * */
-$app->get('/light/all', function ($request, $response) {
+$app->get('/lights', function ($request, $response) {
     $db = new DbOperation();
     $result = $db->getAllLights();
     $lights = array();
@@ -68,7 +68,7 @@ $app->get('/light/all', function ($request, $response) {
  * Authorization: none
  * Method: GET
  * */
-$app->get('/airconditioner/all', function ($request, $response) {
+$app->get('/airconditioners', function ($request, $response) {
     $db = new DbOperation();
     $result = $db->getAllAirConditioners();
     $airconditioners = array();
