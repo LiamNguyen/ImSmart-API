@@ -43,7 +43,7 @@ $app->get('/test/running', function () {
 });
 
 /* *
- * URL: http://210.211.109.180/drmuller/api/light
+ * URL: http://210.211.109.180/drmuller/api/lights
  * Parameters: none
  * Authorization: none
  * Method: GET
