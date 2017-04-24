@@ -102,22 +102,22 @@ $app->post('/lights', function ($request, $response) {
         'area' => $data->area
    );
    
-   $validationRules = new ValidationRules();
+    $validationRules = new ValidationRules();
     $verifiedData = $validationRules->verifyRequiredFieldsForCreatingNewLight($informationArray);
-   if (!$verifiedData['isValid']) {
-       return responseBuilder(400, $response, $verifiedData['response']);
+    if (!$verifiedData['isValid']) {
+        return responseBuilder(400, $response, $verifiedData['response']);
     }
 
     $db = new DbOperation();
     $result = array();
 
-   $isLightCreated = $db->createNewLight($informationArray);
+    $isLightCreated = $db->createNewLight($informationArray);
 
-   if ($isLightCreated) {
+    if ($isLightCreated) {
         $result['status'] = 1;
        $result['message'] = light_create_success_message;
        $statusCode = 200;
-   } else {
+    } else {
        $result['status'] = 0;
         $result['message'] = light_create_error_message;
        $statusCode = 501;
