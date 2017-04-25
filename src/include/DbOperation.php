@@ -43,6 +43,26 @@ class DbOperation
 
         return $conditioners;
     }
+             
+    //Method to insert new light
+    public function insertNewLight($data) {
+        $isOn = $data->isOn;
+        $brightness = $data->brightness;
+        $area = $data->area;
+        
+        $sql = query_Insert_NewLight;
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param('sss', $isOn, $brightness, $area);
+        $result = $stmt->execute();
+        $stmt->close();
+            
+        if ($result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     static function
     Prettify($msg) {

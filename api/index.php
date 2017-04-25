@@ -43,7 +43,7 @@ $app->get('/test/running', function () {
 });
 
 /* *
- * URL: http://210.211.109.180/drmuller/api/light
+ * URL: http://210.211.109.180/drmuller/api/lights
  * Parameters: none
  * Authorization: none
  * Method: GET
@@ -80,6 +80,50 @@ $app->get('/airconditioners', function ($request, $response) {
     }
 
     return responseBuilder(200, $response, $airconditioners);
+});
+
+/* *
+ * URL: http://210.211.109.180/drmuller/api/lights
+ * Parameters: none
+ * Request body:
+ * {
+      "isOn": 1,
+      "brightness": 50,
+      "area": "Dining room"
+ * }
+ * Authorization: Session Token to be matched with userId
+ * Method: post
+ * */
+$app->post('/lights', function ($request, $response) {
+    $data = (object) $request->getParsedBody();
+    $informationArray = array(
+        'isOn' => $data->isOn,
+        'brightness' => $data->brightness,
+        'area' => $data->area
+   );
+   
+    $validationRules = new ValidationRules();
+    $verifiedData = $validationRules->verifyRequiredFieldsForCreatingNewLight($data);
+    if (!$verifiedData['isValid']) {
+        return responseBuilder(400, $response, $verifiedData['response']);
+    }
+
+    $db = new DbOperation();
+    $result = array();
+
+    $isLightCreated = $db->insertNewLight($data);
+
+    if ($isLightCreated) {
+        $result['status'] = 1;
+       $result['message'] = light_create_success_message;
+       $statusCode = 200;
+    } else {
+       $result['status'] = 0;
+        $result['message'] = light_create_error_message;
+       $statusCode = 501;
+    }
+    
+    return responseBuilder(200, $response, $result);
 });
 
 /* *
