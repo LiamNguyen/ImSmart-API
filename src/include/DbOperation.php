@@ -64,6 +64,52 @@ class DbOperation
         }
     }
 
+    public function updateLights($data) {
+        $sql = $this->formStringForLightsUpdate($data);
+        $stmt = $this->con->prepare($sql);
+        $result =$stmt->execute();
+        $stmt->close();
+
+        if($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function formStringForLightsUpdate($data) {
+        $sqlUpdateStmt  = '';
+        $index          = 0;
+
+        $sqlUpdateStmt  = $sqlUpdateStmt
+            .'INSERT INTO beta_imsmartdb.tbl_light (id,IsOn, Brightness) VALUES ';
+
+        foreach ($data as $value) {
+            $light = (object) $value;
+
+            $sqlUpdateStmt = $sqlUpdateStmt
+                . '('
+                . ($index + 1)
+                . ', '
+                . ($light->isOn == '' ? 0 : 1)
+                . ', '
+                . $light->brightness
+                . ')';
+
+            $index++;
+
+            if ($index == count($data)) {
+                break;
+            }
+            $sqlUpdateStmt = $sqlUpdateStmt . ', ';
+        }
+
+        $sqlUpdateStmt  = $sqlUpdateStmt
+            .' ON DUPLICATE KEY UPDATE IsOn=VALUES(IsOn),Brightness=VALUES(Brightness)';
+
+        return $sqlUpdateStmt;
+    }
+
     static function
     Prettify($msg) {
         echo '<br>' . $msg;
