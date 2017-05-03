@@ -67,7 +67,7 @@ class DbOperation
     public function updateLights($data) {
         $sql = $this->formStringForLightsUpdate($data);
         $stmt = $this->con->prepare($sql);
-        $result =$stmt->execute();
+        $result = $stmt->execute();
         $stmt->close();
 
         if($result) {

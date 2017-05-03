@@ -140,26 +140,10 @@ $app->post('/add/lights', function ($request, $response) {
  * */
 $app->post('/update/airconditioners', function ($request, $response) {
     $data = (object) $request->getParsedBody();
-    $informationArray = array(
-        'isOn' => $data->isOn,
-        'fanSpeed' => $data->fanSpeed,
-        'swing' => $data->swing,
-        'mode' => $data->mode,
-        'temperature' => $data->temperature,
-        'isTimerOn' => $data->isTimerOn,
-        'offTime' => $data->offTime,
-        'area' => $data->area
-   );
-   
-    $validationRules = new ValidationRules();
-    $verifiedData = $validationRules->verifyRequiredFieldsForUpdatingAirConditioner($data);
-    if (!$verifiedData['isValid']) {
-        return responseBuilder(400, $response, $verifiedData['response']);
-    }
 
-    $db = new DbOperation();
     $result = array();
 
+    $db = new DbOperation();
     $isAirConditionerUpdated = $db->updateAirConditioners($data);
 
     if ($isAirConditionerUpdated) {
