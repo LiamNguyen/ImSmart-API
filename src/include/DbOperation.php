@@ -106,19 +106,19 @@ class DbOperation
                 . ($index + 1)
                 . ', '
                 . ($ac->isOn == '' ? 0 : 1)
-                . ', '
+                . ', \"'
                 . ($ac->fanSpeed)
-                . ', '
+                . '"\, \"'
                 . ($ac->swing)
-                . ', '
+                . '"\, \"'
                 . ($ac->mode)
-                . ', '
+                . '"\, '
                 . ($ac->temperature)
                 . ', '
                 . ($ac->isTimerOn)
-                . ', '
+                . ', \"'
                 . ($light->offTime)
-                . ')';
+                . '"\)';
 
             $index++;
 
