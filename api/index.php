@@ -126,7 +126,56 @@ $app->post('/add/lights', function ($request, $response) {
     return responseBuilder(200, $response, $result);
 });
 
-$app->post('/lights', function($request, $response) {
+/* *
+ * URL: http://210.211.109.180/drmuller/api/update/airconditioners
+ * Parameters: none
+ * Request body:
+ * {
+      "isOn": 1,
+      "brightness": 50,
+      "area": "Dining room"
+ * }
+ * Authorization: Session Token to be matched with userId
+ * Method: post
+ * */
+$app->post('/update/airconditioners', function ($request, $response) {
+    $data = (object) $request->getParsedBody();
+    $informationArray = array(
+        'isOn' => $data->isOn,
+        'fanSpeed' => $data->fanSpeed,
+        'swing' => $data->swing,
+        'mode' => $data->mode,
+        'temperature' => $data->temperature,
+        'isTimerOn' => $data->isTimerOn,
+        'offTime' => $data->offTime,
+        'area' => $data->area
+   );
+   
+    $validationRules = new ValidationRules();
+    $verifiedData = $validationRules->verifyRequiredFieldsForUpdatingAirConditioner($data);
+    if (!$verifiedData['isValid']) {
+        return responseBuilder(400, $response, $verifiedData['response']);
+    }
+
+    $db = new DbOperation();
+    $result = array();
+
+    $isAirConditionerUpdated = $db->updateAirConditioners($data);
+
+    if ($isAirConditionerUpdated) {
+        $result['status'] = 1;
+        $result['message'] = airconditioner_update_success_message;
+        $statusCode = 200;
+    } else {
+        $result['status'] = 0;
+        $result['message'] = airconditioner_update_error_message;
+        $statusCode = 501;
+    }
+    
+    return responseBuilder(200, $response, $result);
+});
+
+$app->post('/update/lights', function($request, $response) {
     $data = $request->getParsedBody();
 
     $result = array();

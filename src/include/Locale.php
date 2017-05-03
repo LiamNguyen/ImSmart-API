@@ -29,4 +29,15 @@
         'light_create_error_message',
         'Failed to create new light'
     );
+
+    define(
+        'airconditioner_update_success_message',
+        'AirConditioner has been updated successfully'
+    );
+
+    define(
+        'airconditioner_update_error_message',
+        'Falied to update AirConditioner'
+    );
+
 ?>

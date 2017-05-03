@@ -23,4 +23,11 @@
         VALUES (?, ?, ?)'
     );
 
+    define(
+        'query_Update_AirConditioner',
+        'UPDATE ' . DB_NAME . '.tbl_airconditioner ac
+        SET ac.IsOn = ?, ac.FanSpeed = ?, ac.Swing = ?, ac.Mode = ?, ac.Temperature = ?, ac.IsTimerOn = ?, ac.OffTime = ?, ac.Area = ?
+        WHERE ac.Id = ?'
+    )
+
 ?>  

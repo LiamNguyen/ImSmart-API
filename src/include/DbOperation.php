@@ -77,6 +77,64 @@ class DbOperation
         }
     }
 
+    public function updateAirConditioners($data) {
+        $sql = $this->formStringForAirConditionersUpdate($data);
+        $stmt = $this->con->prepare($sql);
+        $result = $stmt->execute();
+        $stmt->close();
+            
+        if ($result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private function formStringForAirConditionersUpdate($data) {
+        $sqlUpdateStmt  = '';
+        $index          = 0;
+
+        $sqlUpdateStmt  = $sqlUpdateStmt
+            .'INSERT INTO beta_imsmartdb.tbl_airconditioner (Id, IsOn, FanSpeed, Swing, Mode, Temperature, IsTimerOn, OffTime) VALUES ';
+
+        foreach ($data as $value) {
+            $ac = (object) $value;
+
+            $sqlUpdateStmt = $sqlUpdateStmt
+                . '('
+                . ($index + 1)
+                . ', '
+                . ($ac->isOn == '' ? 0 : 1)
+                . ', '
+                . ($ac->FanSpeed)
+                . ', '
+                . ($ac->Swing)
+                . ', '
+                . ($ac->Mode)
+                . ', '
+                . ($ac->Temperature)
+                . ', '
+                . ($ac->IsTimerOn)
+                . ', '
+                . ($light->OffTime)
+                . ')';
+
+            $index++;
+
+            if ($index == count($data)) {
+                break;
+            }
+            $sqlUpdateStmt = $sqlUpdateStmt . ', ';
+        }
+
+        $sqlUpdateStmt  = $sqlUpdateStmt
+            .' ON DUPLICATE KEY UPDATE IsOn=VALUES(IsOn), Brightness=VALUES(Brightness), Swing=VALUES(Swing), Mode=VALUES(Mode), Temperature=VALUES(Temperature), 
+            IsTimerOn=VALUES(IsTimerOn), OffTime=VALUES(OffTime)';
+
+        return $sqlUpdateStmt;
+    }
+
     private function formStringForLightsUpdate($data) {
         $sqlUpdateStmt  = '';
         $index          = 0;
@@ -105,7 +163,7 @@ class DbOperation
         }
 
         $sqlUpdateStmt  = $sqlUpdateStmt
-            .' ON DUPLICATE KEY UPDATE IsOn=VALUES(IsOn),Brightness=VALUES(Brightness)';
+            .' ON DUPLICATE KEY UPDATE IsOn=VALUES(IsOn), Brightness=VALUES(Brightness)';
 
         return $sqlUpdateStmt;
     }
