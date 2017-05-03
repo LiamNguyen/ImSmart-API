@@ -129,7 +129,7 @@ class DbOperation
         }
 
         $sqlUpdateStmt  = $sqlUpdateStmt
-            .' ON DUPLICATE KEY UPDATE IsOn=VALUES(IsOn), Brightness=VALUES(Brightness), Swing=VALUES(Swing), Mode=VALUES(Mode), Temperature=VALUES(Temperature), 
+            .' ON DUPLICATE KEY UPDATE IsOn=VALUES(IsOn), FanSpeed=VALUES(FanSpeed), Swing=VALUES(Swing), Mode=VALUES(Mode), Temperature=VALUES(Temperature), 
             IsTimerOn=VALUES(IsTimerOn), OffTime=VALUES(OffTime)';
 
         return $sqlUpdateStmt;
