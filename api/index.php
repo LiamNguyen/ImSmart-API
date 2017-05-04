@@ -94,7 +94,7 @@ $app->get('/airconditioners', function ($request, $response) {
  * Authorization: Session Token to be matched with userId
  * Method: post
  * */
-$app->post('/add/lights', function ($request, $response) {
+$app->post('/lights', function ($request, $response) {
     $data = (object) $request->getParsedBody();
     $informationArray = array(
         'isOn' => $data->isOn,
@@ -126,7 +126,7 @@ $app->post('/add/lights', function ($request, $response) {
     return responseBuilder(200, $response, $result);
 });
 
-$app->post('/lights', function($request, $response) {
+$app->patch('/lights', function($request, $response) {
     $data = $request->getParsedBody();
 
     $result = array();
