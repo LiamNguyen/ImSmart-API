@@ -96,12 +96,7 @@ $app->get('/airconditioners', function ($request, $response) {
  * */
 $app->post('/add/lights', function ($request, $response) {
     $data = (object) $request->getParsedBody();
-    $informationArray = array(
-        'isOn' => $data->isOn,
-        'brightness' => $data->brightness,
-        'area' => $data->area
-   );
-   
+    
     $validationRules = new ValidationRules();
     $verifiedData = $validationRules->verifyRequiredFieldsForCreatingNewLight($data);
     if (!$verifiedData['isValid']) {
@@ -115,18 +110,18 @@ $app->post('/add/lights', function ($request, $response) {
 
     if ($isLightCreated) {
         $result['status'] = 1;
-       $result['message'] = light_create_success_message;
-       $statusCode = 200;
+        $result['message'] = light_create_success_message;
+        $statusCode = 200;
     } else {
-       $result['status'] = 0;
+        $result['status'] = 0;
         $result['message'] = light_create_error_message;
-       $statusCode = 501;
+        $statusCode = 501;
     }
     
-    return responseBuilder(200, $response, $result);
+    return responseBuilder($statusCode, $response, $result);
 });
 
-$app->post('/lights', function($request, $response) {
+$app->post('/update/lights', function($request, $response) {
     $data = $request->getParsedBody();
 
     $result = array();
