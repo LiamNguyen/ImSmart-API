@@ -1,14 +1,14 @@
 <?php
 
 class ValidationRules {
-/* *
-* Type: Helper method
-* Responsibility: Check required fields when creating new lights
-* */
+    /* *
+    * Type: Helper method
+    * Responsibility: Check required fields when creating new lights
+    * */
     function verifyRequiredFieldsForCreatingNewLight($data) {
         $result = array();
         
-        if (!is_int($data->isOn) || !is_int($data->brightness) || empty($data->area)) {
+        if (is_bool($data->isOn) === false || !is_int($data->brightness) || empty($data->area)) {
             $result['status'] = 0;
             $result['message'] = required_fields_missing_message;
             $result['errorCode'] = required_fields_missing_code;
@@ -17,8 +17,7 @@ class ValidationRules {
         
         return array('isValid' => true);
     }
-    
-
+   
 }
 
 ?>

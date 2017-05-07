@@ -46,7 +46,7 @@ class DbOperation
              
     //Method to insert new light
     public function insertNewLight($data) {
-        $isOn = $data->isOn;
+        $isOn = $data->isOn == '' ? 0 : 1;
         $brightness = $data->brightness;
         $area = $data->area;
         
@@ -56,7 +56,7 @@ class DbOperation
         $result = $stmt->execute();
         $stmt->close();
             
-        if ($result == 1) {
+        if ($result) {
             return true;
         }
         else {
