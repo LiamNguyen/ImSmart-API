@@ -55,7 +55,7 @@ $app->get('/lights', function ($request, $response) {
     $temp = array();
 
     while($row = $result->fetch_object()) {
-        $temp = $row;
+        $temp = parseLightInformationToResponse($row);
         array_push($lights, $temp);
     }
 
@@ -144,6 +144,15 @@ $app->post('/update/lights', function($request, $response) {
  * Type: Helper method
  * Responsibility: Build response with contentType and httpStatusCode
  * */
+
+function parseLightInformationToResponse($lightInformation) {
+    return (object) array(
+                'id' => $lightInformation->Id,
+                'isOn' => $lightInformation->IsOn,
+                'brightness' => $lightInformation->Brightness,
+                'area' => $lightInformation->Area
+            );
+}
 
 function responseBuilder($status_code, $response, $responseObj) {
     return $response->withStatus($status_code)
