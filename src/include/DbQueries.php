@@ -19,8 +19,8 @@
     define(
         'query_Insert_NewLight',
         'INSERT INTO ' . DB_NAME . '.tbl_light
-        (IsOn, Brightness, Area)
-        VALUES (?, ?, ?)'
+        (Id, IsOn, Brightness, Area)
+        VALUES (?, ?, ?, ?)'
     );
 
 ?>  

@@ -46,13 +46,14 @@ class DbOperation
              
     //Method to insert new light
     public function insertNewLight($data) {
+        $id = $data->id;
         $isOn = $data->isOn;
         $brightness = $data->brightness;
         $area = $data->area;
         
         $sql = query_Insert_NewLight;
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param('sss', $isOn, $brightness, $area);
+        $stmt->bind_param('ssss', $id, $isOn, $brightness, $area);
         $result = $stmt->execute();
         $stmt->close();
             

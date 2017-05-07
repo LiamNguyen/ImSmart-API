@@ -8,7 +8,7 @@ class ValidationRules {
     function verifyRequiredFieldsForCreatingNewLight($data) {
         $result = array();
         
-        if (!is_int($data->isOn) || !is_int($data->brightness) || empty($data->area)) {
+        if (!is_bool($data->isOn) || !is_int($data->brightness) || empty($data->area)) {
             $result['status'] = 0;
             $result['message'] = required_fields_missing_message;
             $result['errorCode'] = required_fields_missing_code;
