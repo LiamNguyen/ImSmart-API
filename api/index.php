@@ -157,6 +157,7 @@ function parseLightInformationToResponse($lightInformation) {
 function responseBuilder($status_code, $response, $responseObj) {
     return $response->withStatus($status_code)
                     ->withHeader('Content-Type', 'application/json')
+                    ->withHeader('Access-Control-Allow-Origin', '*')
                     ->write(json_encode($responseObj));
 }
 
